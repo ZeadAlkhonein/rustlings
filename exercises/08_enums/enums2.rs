@@ -5,9 +5,21 @@ struct Point {
 }
 
 #[derive(Debug)]
+struct Resize{
+    width: i32,
+    height: i32
+}
+
+#[derive(Debug)]
 enum Message {
     // TODO: Define the different variants used below.
+    Resize(Resize),
+    Move(Point),
+    Echo(String),
+    ChangeColor(i16, i16, i16),
+    Quit
 }
+
 
 impl Message {
     fn call(&self) {
@@ -17,10 +29,7 @@ impl Message {
 
 fn main() {
     let messages = [
-        Message::Resize {
-            width: 10,
-            height: 30,
-        },
+        Message::Resize (Resize { width: 10, height: 30 }),
         Message::Move(Point { x: 10, y: 15 }),
         Message::Echo(String::from("hello world")),
         Message::ChangeColor(200, 255, 255),
