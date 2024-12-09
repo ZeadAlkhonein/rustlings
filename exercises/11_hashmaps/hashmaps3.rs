@@ -10,6 +10,7 @@ use std::collections::HashMap;
 
 // A structure to store the goal details of a team.
 #[derive(Default)]
+#[derive(Debug)]
 struct TeamScores {
     goals_scored: u8,
     goals_conceded: u8,
@@ -26,6 +27,14 @@ fn build_scores_table(results: &str) -> HashMap<&str, TeamScores> {
         let team_2_name = split_iterator.next().unwrap();
         let team_1_score: u8 = split_iterator.next().unwrap().parse().unwrap();
         let team_2_score: u8 = split_iterator.next().unwrap().parse().unwrap();
+
+        scores.entry(team_1_name)
+            .and_modify(|e: &mut TeamScores| { e.goals_scored += team_1_score; e.goals_conceded +=team_2_score })
+            .or_insert(TeamScores{goals_scored : team_1_score, goals_conceded: team_2_score});
+// , e.goals_conceded +=team_2_score
+        scores.entry(team_2_name)
+            .and_modify(|e: &mut TeamScores| { e.goals_scored += team_2_score; e.goals_conceded +=team_1_score })
+            .or_insert(TeamScores{goals_scored : team_2_score, goals_conceded: team_1_score});
 
         // TODO: Populate the scores table with the extracted details.
         // Keep in mind that goals scored by team 1 will be the number of goals
@@ -63,8 +72,11 @@ England,Spain,1,0";
     fn validate_team_score_1() {
         let scores = build_scores_table(RESULTS);
         let team = scores.get("England").unwrap();
+        // println!("heeyeyeyyey ===>{:?}", scores);
+
         assert_eq!(team.goals_scored, 6);
         assert_eq!(team.goals_conceded, 4);
+
     }
 
     #[test]
