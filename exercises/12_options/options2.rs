@@ -1,18 +1,24 @@
 fn main() {
     // You can optionally experiment here.
+    // mod tests;
+    // tests::simple_option()
 }
 
 #[cfg(test)]
 mod tests {
     #[test]
-    fn simple_option() {
+    pub fn simple_option() {
         let target = "rustlings";
         let optional_target = Some(target);
-
+        // let mut word: String = String::new();
         // TODO: Make this an if-let statement whose value is `Some`.
-        if let word  Some(optional_target) =  {
+       
+        if let Some(word) = optional_target {
+            println!("heey");
             assert_eq!(word, target);
         }
+        // word = optional_target {
+        // }
     }
 
     #[test]
@@ -29,10 +35,23 @@ mod tests {
         // TODO: Make this a while-let statement. Remember that `Vec::pop()`
         // adds another layer of `Option`. You can do nested pattern matching
         // in if-let and while-let statements.
-        integer = optional_integers.pop() {
-            assert_eq!(integer, cursor);
-            cursor -= 1;
+        while let Some(integer) = optional_integers.pop() {
+            // println!("{:?}",(integer));
+            match integer {
+                Some(integer) => {
+                    assert_eq!(integer, cursor);
+                    cursor -= 1;
+                }
+                _ => println!("None" ),
+                
+            }
+            
         }
+
+        // integer = optional_integers.pop() {
+        //     assert_eq!(integer, cursor);
+        //     cursor -= 1;
+        // }
 
         assert_eq!(cursor, 0);
     }
